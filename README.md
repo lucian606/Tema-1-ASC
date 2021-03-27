@@ -45,7 +45,7 @@
       - golesc lista din carts  
       - returnez produsele care erau in cart  
 
-###Implementare producer:
+### Implementare producer:
   - pe langa membrii dati in schelet am folosit un string, care reprezinta  
     id-ul producatorului  
   - metoda run se bazeaza pe o bucla infinita in care:  
@@ -54,7 +54,7 @@
       - dau publish de cate ori imi zice cantitatea si daca returneaza False  
         mai incerc o data pana imi iese, fara sa avansez in iteratie  
 
-###Implementare consumer:
+### Implementare consumer:
   - metoda run este alcatuita din urmatoarele etape:  
       - parcurg fiecare cart din lista de carturi  
       - creez un id nou pentru cartul respectiv  
