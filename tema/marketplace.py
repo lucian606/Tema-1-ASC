@@ -20,6 +20,7 @@ class Marketplace:
         :type queue_size_per_producer: Int
         :param queue_size_per_producer: the maximum size of a queue associated with each producer
         """
+
         self.queue_size_per_producer = queue_size_per_producer
         self.producer_id = 0 # the id of the next producer
         self.cart_id = 0 # the id of the next cart
@@ -32,6 +33,7 @@ class Marketplace:
         """
         Returns an id for the producer that calls this.
         """
+
         self.mutex.acquire() # preventing the race condition on producer id
         producer_id = self.producer_id
         self.producer_id += 1 # prepare a new id for the next user
@@ -51,6 +53,7 @@ class Marketplace:
 
         :returns True or False. If the caller receives False, it should wait and then try again.
         """
+
         producer_index = int(producer_id) # casting the id to int for index
         if len(self.queues[producer_index]) == self.queue_size_per_producer: # check if queue full
             return False
@@ -64,6 +67,7 @@ class Marketplace:
 
         :returns an int representing the cart_id
         """
+
         self.mutex.acquire()
         cart_id = self.cart_id
         self.cart_id += 1
@@ -83,6 +87,7 @@ class Marketplace:
 
         :returns True or False. If the caller receives False, it should wait and then try again
         """
+
         # Checking if the product is in the market
         is_product = False
         for queue in self.queues:
@@ -105,6 +110,7 @@ class Marketplace:
         :type product: Product
         :param product: the product to remove from cart
         """
+
         if product not in self.carts[cart_id]:
             return False
         producer_idx = self.products_dict[product] # getting the idx of the product's queue
@@ -121,6 +127,7 @@ class Marketplace:
         :type cart_id: Int
         :param cart_id: id cart
         """
+
         cart_content = self.carts[cart_id] # store the cart's content
         self.carts[cart_id] = [] # empty the cart
         return cart_content # return the contents of the cart
