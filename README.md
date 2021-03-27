@@ -2,52 +2,28 @@
 ## 334CC Iliescu Lucian-Marius
 
 ### Implementare marketplace:  
-  - am folosit urmatorii membri pentru a ma ajuta la implementare:  
-      - queue_size_per_producer: dimensiunea cozii fiecarui producator  
-      - producer_id: id-ul producatorului care va apela register_producer  
-      - cart_id: id-ul cartului care va fi generat cu new_cart  
-      - queues: lista care contine cozile producatorilor  
-      - mutex: Lock care va preveni race conditions
-      - products_dict: dictionar in care retine producatorul fiecarui produs  
-  - register_producer:  
-      - dau lock la mutex sa previn race condition pe producer_id  
-      - variabila producer_id este un int care reprezinta indexul cozii pe care  
-        producatorul o va avea in lista de cozii  
-      - la fiecare apel producer_id se incrementeaza  
-      - dau unlock la mutex  
-      - returnez valoarea acesteia  
-  - publish:  
-      - iau indexul cozii din id-ul producatorului  
-      - verific daca coada e plina  
-      - adaug produsul in coada producatorului  
-      - pun produsul in dictionarul de produce impreuna cu indexu producatorului  
-      - folosesc products_dict ca atunci cand se scoate un produs din cart  
-        sa stiu de unde l-am luat  
-  - new_cart:  
-      - dau lock la mutex sa preivn race condition pe cart id  
-      - variabila cart_id este un int care va retine indexul listei care  
-        reprezinta cartul din lista carts  
-      - la fiecare apel incrementez cart_id  
-      - dau unlock la mutex  
-      - returnez id-ul generat  
-  - add_to_cart:  
-      - parcurg toate cozile producatorilor  
-      - daca gasesc produsul il bag in cartul respectiv  
-      - daca nu il gasesc returnez False  
-  - remove_from_cart:  
-      - verific daca produsul e in cart, daca nu returnez False  
-      - iau indexul_producatorului corespondent produsului scos ca sa stiu unde  
-        trebuie sa il pun  
-      - scot produsul din lista cartului  
-      - adaug produsul in coada producatorului care l-a produs  
-  - place_order:
-      - iau lista cartului cu cart_id  
-      - golesc lista din carts  
-      - returnez produsele care erau in cart  
+  - pentru a implementa bufferele fiecarui producator am folosit o lista de cozi  
+  - pentru ca fiecare producator sa stie ce coada trebuie sa acceseze, el se va  
+  folosi de id-ul lui, unde generarea id-ului se va face la  
+  instantierea producatorului  
+  - id-ul generat e reprezentat de un numar, care pleaca de la 0 si se  
+  incrementeaza la fiecare apel de generare al unui id
+  - am folosit acest tip de generare deoarece facea o asociere imediata intre  
+  producator si bufferul acestuie
+  - se putea folosi un dictionar in loc de lista de liste unde cheia sa id-ul  
+  si valoarea sa fie bufferul, dar abordarea curent mi se pare mai eficienta  
+  deoarece as avea inserare in O(1) mereu, spre deosebire de un dictionar  
+  unde am tot O(1) la inserare in majoritatea timpului, dar pot avea coliziuni  
+  si inserarea sa necesite mai mult timp
+  - de asemenea, am folosit o coada pentru fiecare producator deoarece  
+  ele imi asigura sincronizare, fara sa mai trebuiasca sa folosesc lock-uri
+  - un mecanism similar am folosit si pentru generarea id-urilor cosurilor
+  - am folosit un lock, numit mutex, ca sa previn conditiile de cursa  
+  pe variabilele de id
 
 ### Implementare producer:
   - pe langa membrii dati in schelet am folosit un string, care reprezinta  
-    id-ul producatorului  
+    id-ul producatorului, acest id generandu-se la instantierea producatorului   
   - metoda run se bazeaza pe o bucla infinita in care:  
       - parcurg fiecare produs din lista de tupluri products a producatorului  
       - extrag cantitatea si timpul de producere din tuplu  
