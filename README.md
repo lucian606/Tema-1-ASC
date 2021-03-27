@@ -20,6 +20,11 @@
   - un mecanism similar am folosit si pentru generarea id-urilor cosurilor
   - am folosit un lock, numit mutex, ca sa previn conditiile de cursa  
   pe variabilele de id
+  - am folosit un dictionar product_dict, unde cheia este produsul  
+  si valoarea este indexul cozii de unde a fost luat produsul, atunci cand dau  
+  publish unui produs, il adaug in dictionar impreuna cu producatorul, folosesc  
+  dictionarul la remove from cart, pentru a sti unde trebuie sa pun produsul,  
+  in coada de unde il luasem initial
 
 ### Implementare producer:
   - pe langa membrii dati in schelet am folosit un string, care reprezinta  
