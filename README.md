@@ -11,7 +11,7 @@
   - am folosit acest tip de generare deoarece facea o asociere imediata intre  
   producator si bufferul acestuie
   - se putea folosi un dictionar in loc de lista de liste unde cheia sa id-ul  
-  si valoarea sa fie bufferul, dar abordarea curent mi se pare mai eficienta  
+  si valoarea sa fie bufferul, dar abordarea curenta mi se pare mai eficienta  
   deoarece as avea inserare in O(1) mereu, spre deosebire de un dictionar  
   unde am tot O(1) la inserare in majoritatea timpului, dar pot avea coliziuni  
   si inserarea sa necesite mai mult timp
@@ -34,7 +34,8 @@
   - metoda run este alcatuita din urmatoarele etape:  
       - parcurg fiecare cart din lista de carturi  
       - creez un id nou pentru cartul respectiv  
-      - pentru fiecare comanda din cart extrag tipul comenzii, produsl, cantitatea  
+      - pentru fiecare comanda din cart extrag tipul comenzii, produsul  
+        si cantitatea  
       - daca tipul comenzii e add, apelez add_to_cart, ca sa adaug cantitatea  
         de produse in cos si daca returneaza False incerc pana se poate adagua  
       - daca tipul comenzii e move, apelez remove_from_cart si procedez similar  
